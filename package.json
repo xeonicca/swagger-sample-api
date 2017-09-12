@@ -1,0 +1,29 @@
+{
+  "name": "sample-api",
+  "version": "1.0.0",
+  "description": "test demo app",
+  "main": "app.js",
+  "dependencies": {
+    "express": "^4.15.4",
+    "https-proxy-agent": "^2.1.0",
+    "request": "^2.81.0",
+    "swagger-ui": "^3.2.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xeonicca/swagger-sample-api.git"
+  },
+  "keywords": [
+    "swagger"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/xeonicca/swagger-sample-api/issues"
+  },
+  "homepage": "https://github.com/xeonicca/swagger-sample-api#readme"
+}
