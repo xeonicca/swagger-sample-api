@@ -32,229 +32,125 @@
           "person"
         ],
         "summary": "隨機取得一個user的資料",
-        "description": "",
+        "description": "背景會去呼叫randomuser.me裡的api，取得類似個人資料的假資料",
         "operationId": "getPerson",
         "produces": [
           "application/json"
         ],
         "responses": {
-          "405": {
-            "description": "Invalid input"
+          "200": {
+            "description": "成功",
+            "schema": {
+              "$ref": "#/definitions/ApiResponse"
+            }
           }
         }
       }
     },
-    "/pet/findByStatus": {
+    "/people/{count}": {
       "get": {
         "tags": [
-          "pet"
+          "person"
         ],
-        "summary": "Finds Pets by status",
-        "description": "Multiple status values can be provided with comma separated strings",
-        "operationId": "findPetsByStatus",
+        "summary": "隨機取得多個user的資料",
+        "description": "背景會去呼叫randomuser.me裡的api，取得類似個人資料的假資料，預設5個人",
+        "operationId": "getPeople",
         "produces": [
-          "application/xml",
           "application/json"
         ],
         "parameters": [
           {
-            "name": "status",
-            "in": "query",
-            "description": "Status values that need to be considered for filter",
-            "required": true,
-            "type": "array",
-            "items": {
-              "type": "string",
-              "enum": [
-                "available",
-                "pending",
-                "sold"
-              ],
-              "default": "available"
-            },
-            "collectionFormat": "multi"
+            "name": "count",
+            "in": "path",
+            "description": "想要取得的人數",
+            "required": false,
+            "type": "integer"
           }
         ],
         "responses": {
           "200": {
             "description": "successful operation",
             "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/Pet"
-              }
+              "$ref": "#/definitions/ApiResponse"
             }
-          },
-          "400": {
-            "description": "Invalid status value"
           }
         }
       }
     }
   },
   "definitions": {
-    "Order": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "integer",
-          "format": "int64"
-        },
-        "petId": {
-          "type": "integer",
-          "format": "int64"
-        },
-        "quantity": {
-          "type": "integer",
-          "format": "int32"
-        },
-        "shipDate": {
-          "type": "string",
-          "format": "date-time"
-        },
-        "status": {
-          "type": "string",
-          "description": "Order Status",
-          "enum": [
-            "placed",
-            "approved",
-            "delivered"
-          ]
-        },
-        "complete": {
-          "type": "boolean",
-          "default": false
-        }
-      },
-      "xml": {
-        "name": "Order"
-      }
-    },
-    "Category": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "integer",
-          "format": "int64"
-        },
-        "name": {
-          "type": "string"
-        }
-      },
-      "xml": {
-        "name": "Category"
-      }
-    },
-    "User": {
+    "Person": {
       "type": "object",
       "properties": {
         "gender": {
-          "type": "string"
+          "type": "string",
+          "description": "性別",
+          "enum": [
+            "male",
+            "female"
+          ]
         },
         "name": {
           "type": "object",
           "properties": {
             "title": {
-              "type": "string"
+              "type": "string",
+              "description": "稱謂"
             },
             "first": {
-              "type": "string"
+              "type": "string",
+              "description": "名"
             },
             "last": {
-              "type": "string"
+              "type": "string",
+              "description": "姓"
             }
           }
         },
         "nat": {
-          "type": "string"
+          "type": "string",
+          "description": "國籍"
         }
       }
     },
-    "Tag": {
+    "ApiDetail": {
       "type": "object",
       "properties": {
-        "id": {
-          "type": "integer",
-          "format": "int64"
-        },
-        "name": {
-          "type": "string"
-        }
-      },
-      "xml": {
-        "name": "Tag"
-      }
-    },
-    "Pet": {
-      "type": "object",
-      "required": [
-        "name",
-        "photoUrls"
-      ],
-      "properties": {
-        "id": {
-          "type": "integer",
-          "format": "int64"
-        },
-        "category": {
-          "$ref": "#/definitions/Category"
-        },
-        "name": {
+        "seed": {
           "type": "string",
-          "example": "doggie"
+          "description": "亂數seed"
         },
-        "photoUrls": {
-          "type": "array",
-          "xml": {
-            "name": "photoUrl",
-            "wrapped": true
-          },
-          "items": {
-            "type": "string"
-          }
+        "page": {
+          "type": "integer",
+          "description": "頁碼"
         },
-        "tags": {
-          "type": "array",
-          "xml": {
-            "name": "tag",
-            "wrapped": true
-          },
-          "items": {
-            "$ref": "#/definitions/Tag"
-          }
+        "results": {
+          "type": "integer",
+          "description": "實際回傳筆數"
         },
-        "status": {
+        "version": {
           "type": "string",
-          "description": "pet status in the store",
-          "enum": [
-            "available",
-            "pending",
-            "sold"
-          ]
+          "description": "API版本"
         }
-      },
-      "xml": {
-        "name": "Pet"
       }
     },
     "ApiResponse": {
       "type": "object",
       "properties": {
-        "code": {
-          "type": "integer",
-          "format": "int32"
+        "result": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Person"
+          }
         },
-        "type": {
-          "type": "string"
-        },
-        "message": {
-          "type": "string"
+        "info": {
+          "$ref": "#/definitions/ApiDetail"
         }
       }
     }
   },
   "externalDocs": {
-    "description": "Find out more about Swagger",
+    "description": "Find out more about Swagger, thanks!",
     "url": "http://swagger.io"
   }
 }

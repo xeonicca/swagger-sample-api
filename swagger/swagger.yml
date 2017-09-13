@@ -1,0 +1,109 @@
+---
+swagger: '2.0'
+info:
+  description: Random user API
+  version: 1.0.0
+  title: Swagger Demo API
+  termsOfService: http://swagger.io/terms/
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+host: localhost:3000
+basePath: "/"
+tags:
+- name: person
+  description: Operations about person
+  externalDocs:
+    description: Find out more about our store
+    url: https://randomuser.me/
+schemes:
+- http
+paths:
+  "/person":
+    get:
+      tags:
+      - person
+      summary: 隨機取得一個user的資料
+      description: 背景會去呼叫randomuser.me裡的api，取得類似個人資料的假資料
+      operationId: getPerson
+      produces:
+      - application/json
+      responses:
+        '200':
+          description: 成功
+          schema:
+            $ref: '#/definitions/ApiResponse'
+  "/people/{count}":
+    get:
+      tags:
+      - person
+      summary: 隨機取得多個user的資料
+      description: 背景會去呼叫randomuser.me裡的api，取得類似個人資料的假資料，預設5個人
+      operationId: getPeople
+      produces:
+      - application/json
+      parameters:
+      - name: count
+        in: path
+        description: 想要取得的人數
+        required: false
+        type: integer
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/ApiResponse'
+definitions:
+  Person:
+    type: object
+    properties:
+      gender:
+        type: string
+        description: 性別
+        enum:
+          - male
+          - female
+      name:
+        type: object
+        properties:
+          title:
+            type: string
+            description: 稱謂
+          first:
+            type: string
+            description: 名
+          last:
+            type: string
+            description: 姓
+      nat:
+        type: string
+        description: 國籍
+
+  ApiDetail:
+    type: object
+    properties:
+      seed:
+        type: string
+        description: "亂數seed"
+      page:
+        type: integer
+        description: "頁碼"
+      results:
+        type: integer
+        description: "實際回傳筆數"
+      version:
+        type: string
+        description: "API版本"
+
+  ApiResponse:
+    type: object
+    properties:
+      result:
+        type: array
+        items:
+          $ref: "#/definitions/Person"
+      info:
+        $ref: "#/definitions/ApiDetail"
+externalDocs:
+  description: Find out more about Swagger, thanks!
+  url: http://swagger.io

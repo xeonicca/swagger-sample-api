@@ -46,6 +46,6 @@ app.use('/people', router);
 
 app.use('/swagger', express.static('swagger'));
 
-app.listen(3000, function () {
-  console.log('Example app listening on port 3000!');
+app.listen(9487, function () {
+  console.log('Example app listening on port 9487!');
 });
