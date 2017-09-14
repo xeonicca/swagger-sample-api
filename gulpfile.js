@@ -8,7 +8,6 @@ var nodemonConfig = {
   script: 'app.js',
   ignore: [
     'gulpfile.js',
-    'config/',
     'node_modules/',
     'swagger/'
   ]

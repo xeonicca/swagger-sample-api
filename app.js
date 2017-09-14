@@ -11,7 +11,7 @@ app.get('/', function (req, res) {
 
 app.get('/person', function(req, res) {
   request({
-    uri: "https://randomuser.me/api?nat=us&inc=gender,name,nat",
+    uri: "https://randomuser.me/api?inc=gender,name,nat",
     method: "GET",
     headers: {
       'content-type': 'application/x-www-form-urlencoded'
@@ -25,10 +25,17 @@ app.get('/person', function(req, res) {
   });
 })
 
-router.get('/:count', function(req, res) {
+router.get('/:count?', function(req, res) {
   var count = req.params.count || 5;
+  var additionalFields = ''
+  for(var query in req.query) {
+    additionalFields += '&' + query + '=' + req.query[query]
+  }
+
+  var requestURL = `https://randomuser.me/api?results=${count}&inc=gender,name,nat${additionalFields}`
+
   request({
-    uri: `https://randomuser.me/api?nat=us&results=${count}&inc=gender,name,nat`,
+    uri: requestURL,
     method: "GET",
     headers: {
       'content-type': 'application/x-www-form-urlencoded'
