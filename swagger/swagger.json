@@ -65,6 +65,13 @@
             "description": "想要取得的人數",
             "required": false,
             "type": "integer"
+          },
+          {
+            "name": "nat",
+            "in": "query",
+            "description": "nationality",
+            "required": false,
+            "type": "string"
           }
         ],
         "responses": {

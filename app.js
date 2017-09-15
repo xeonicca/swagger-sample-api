@@ -2,8 +2,6 @@ var express = require('express');
 var app = express();
 var router = express.Router();
 var request = require('request');
-var HttpsProxyAgent = require('https-proxy-agent');
-var agent = new HttpsProxyAgent('http://172.30.0.192:8080');
 
 app.get('/', function (req, res) {
   res.send('Hello World!');
@@ -16,7 +14,6 @@ app.get('/person', function(req, res) {
     headers: {
       'content-type': 'application/x-www-form-urlencoded'
     },
-    agent: agent,
     timeout: 10000,
     followRedirect: true,
     maxRedirects: 10,
@@ -40,7 +37,6 @@ router.get('/:count?', function(req, res) {
     headers: {
       'content-type': 'application/x-www-form-urlencoded'
     },
-    agent: agent,
     timeout: 10000,
     followRedirect: true,
     maxRedirects: 10,
